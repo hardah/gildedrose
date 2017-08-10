@@ -1,6 +1,6 @@
 node { 
     stage ('prep') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'e22c3202-01a5-4171-9ea2-b616b5c6a66b', url: 'git@github.com:hardah/gildedrose.git']]])
+        git 'https://github.com/hardah/gildedrose'
         echo "cloned git"
     }
 
@@ -11,6 +11,7 @@ node {
     }
 
     stage ('results') {
-        
+        junit '**/target/surefire-reports/TEST-*.xml'
+        archive 'target/*.jar'
     }
 }
