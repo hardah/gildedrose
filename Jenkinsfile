@@ -6,7 +6,7 @@ node {
 
     stage ('build') {
         echo "building"
-        sh 'docker run -i --rm --name my-maven-project -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven:3-jdk-8 mvn install'
+        sh 'docker run -i --rm --name my-maven-build -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven:3-jdk-8 mvn install'
         echo "built"
     }
 
@@ -17,7 +17,7 @@ node {
     }
     
     stage ('doc') {
-        sh 'docker run -i --rm --name my-maven-project -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven:3-jdk-8 mvn site'
+        sh 'docker run -i --rm --name my-maven-doc -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven:3-jdk-8 mvn site'
         archive 'target/site/**/*'
     }
 }
